@@ -1,0 +1,33 @@
+//
+//  main.cpp
+//  testing
+//
+//  Created by Tatikella, Abhishek on 20/08/19.
+//  Copyright © 2019 Tatikella, Abhishek. All rights reserved.
+//
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <map>
+
+using namespace std;
+
+map < long long , long long > mp;
+
+long long get(long long n) {
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    if (mp.find(n) != mp.end()) return mp[n];
+    return mp[n] = (long long) (max(n, get(n/2) + get(n/3) + get(n/4)));
+}
+
+int main(int argc, const char * argv[]) {
+    
+    int n;
+    while(cin >> n) {
+        cout << get(n) << endl;
+    }
+    return 0;
+}
