@@ -1,0 +1,33 @@
+//
+//  main.cpp
+//  testing
+//
+//  Created by Tatikella, Abhishek on 20/08/19.
+//  Copyright © 2019 Tatikella, Abhishek. All rights reserved.
+//
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+int main(int argc, const char * argv[]) {
+    
+    int t;
+    cin >> t;
+    while(t--) {
+        string a, b;
+        cin >> a >> b;
+        
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
+        
+        int A = stoi(a);
+        int B = stoi(b);
+        
+        string ans = to_string(A + B);
+        reverse(ans.begin(), ans.end());
+        cout << stoi(ans) << endl;
+    }
+}
