@@ -1,0 +1,77 @@
+//
+//  main.cpp
+//  testing
+//
+//  Created by Tatikella, Abhishek on 20/08/19.
+//  Copyright © 2019 Tatikella, Abhishek. All rights reserved.
+//
+
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <map>
+
+using namespace std;
+
+#define N 1123
+#define ff first
+#define ss second
+
+vector < int > edges[N];
+map < pair <int , int >, int > mp;
+int visited[N];
+bool isCycleDetected;
+
+void dfs(int node, int parent) {
+    if (visited[node]) {
+        isCycleDetected = true;
+        return;
+    }
+    visited[node] = 1;
+    for(int i = 0; i < edges[node].size(); i++) {
+        if (edges[node][i] != parent) dfs(edges[node][i], node);
+    }
+}
+
+int main(int argc, const char * argv[]) {
+
+    isCycleDetected = false;
+    
+    int n, e;
+    cin >> n >> e;
+    
+    
+    for(int i = 0;i < e; i++) {
+        int a, b;
+        cin >> a >> b;
+    
+        if(mp.find({a,b}) == mp.end() && mp.find({b, a}) == mp.end()) {
+            edges[a].push_back(b);
+            edges[b].push_back(a);
+            mp.insert({{a, b}, 1});
+            mp.insert({{b , a}, 1});
+        }
+    }
+    
+    
+    memset(visited, 0, sizeof(visited));
+    dfs(1, -1);
+    
+    bool areAllCovered = true;
+    for(int i = 1;i <= n; i++) {
+        if (!visited[i]) {
+            areAllCovered = false;
+            break;
+        }
+    }
+    
+    //cout << areAllCovered << " " << isCycleDetected << endl;
+    if (areAllCovered == false || isCycleDetected == true) {
+        cout << "NO" << endl;
+    } else cout << "YES" << endl;
+    return 0;
+}
+
+
