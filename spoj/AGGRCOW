@@ -1,0 +1,63 @@
+//
+//  main.cpp
+//  testing
+//
+//  Created by Tatikella, Abhishek on 20/08/19.
+//  Copyright © 2019 Tatikella, Abhishek. All rights reserved.
+//
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <map>
+
+using namespace std;
+
+#define N 1123
+#define ff first
+#define ss second
+
+int a[N];
+
+int isOK(int val, int n , int c) {
+    int left = c - 1;
+    int lastPos = 0;
+    for(int i = 1;i < n; i++) {
+        if (left == 0) break;
+        if (a[i] - a[lastPos] >= val) {
+            left--;
+            lastPos = i;
+        }
+    }
+    
+    if (left == 0) return 1;
+    return 0;
+}
+
+int main(int argc, const char * argv[]) {
+
+    int t;
+    cin >> t;
+    while( t--) {
+        int n, c;
+        cin >> n >> c;
+        
+        for(int i = 0; i < n; i++) cin >> a[i];
+        sort(a, a + n);
+        
+        int lo = 0, hi = 1000000000;
+        while(lo <= hi) {
+            int mid = lo + ((hi - lo) >> 1);
+            if (isOK(mid, n , c)) lo = mid + 1;
+            else hi = mid - 1;
+        }
+    
+        cout << hi << endl;
+    }
+   
+    
+    return 0;
+}
+
+
